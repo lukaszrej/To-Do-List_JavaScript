@@ -149,6 +149,10 @@ button,
     align-items: center;
 }
 
+.counter-container div {
+    display: flex;
+}
+
 .counter-container input {
     margin-top: 0;
     margin-bottom: 0;
@@ -158,6 +162,13 @@ button,
 
 .counter-container button {
     padding: 1rem 2rem;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.counter-container span {
+    margin-left: 1rem;
+    margin-right: 1rem;
 }
 
 /* When clicked on, mark a list item as completed */

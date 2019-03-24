@@ -150,18 +150,8 @@ var deletAllItems = function() {
 
 };
 
-
-// m a i n
-
-document.addEventListener("DOMContentLoaded", function () {
-    var taskList = document.getElementById('taskList');
-    var addTaskButton = document.getElementById('addTaskButton');
-
-    editTask();
-    markAsCompleted();
-    deleteFromList();
-
-    // Find task
+// Find task
+var findTask = function() {
     var searchButton = document.querySelector('.searchButton');
     var foundedValue = "";
 
@@ -176,7 +166,7 @@ document.addEventListener("DOMContentLoaded", function () {
             var taskText = li[i].innerHTML;
 
             if(taskText === inputSearchValue){
-             foundedValue = li[i];
+                foundedValue = li[i];
             }
             console.log(e);
         }
@@ -193,7 +183,55 @@ document.addEventListener("DOMContentLoaded", function () {
         ul.appendChild(foundedValue);
         console.log(foundedValue);
 
-        });
+    });
+};
+
+
+
+// m a i n
+
+document.addEventListener("DOMContentLoaded", function () {
+    var taskList = document.getElementById('taskList');
+    var addTaskButton = document.getElementById('addTaskButton');
+
+    editTask();
+    markAsCompleted();
+    deleteFromList();
+    findTask();
+
+    // Find task: working - raw form
+    // var searchButton = document.querySelector('.searchButton');
+    // var foundedValue = "";
+    //
+    // searchButton.addEventListener('click', function(e){
+    //     var listElements = document.querySelector("#taskList");
+    //     var li = listElements.querySelectorAll('.to-do');
+    //     var inputSearchElement = document.querySelector('#search');
+    //     var inputSearchValue = inputSearchElement.value;
+    //
+    //     for(var i=0; i<li.length;i++){
+    //
+    //         var taskText = li[i].innerHTML;
+    //
+    //         if(taskText === inputSearchValue){
+    //          foundedValue = li[i];
+    //         }
+    //         console.log(e);
+    //     }
+    //
+    //     console.log(foundedValue,'znalezione');
+    //
+    //     var li = document.querySelectorAll('li');
+    //
+    //     for(var i=0; i<li.length; i++){
+    //         li[i].remove();
+    //     };
+    //
+    //     var ul = document.querySelector('ul');
+    //     ul.appendChild(foundedValue);
+    //     console.log(foundedValue);
+    //
+    //     });
 
 
     // Create a new list item
