@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To Do List with JavaScript</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" 
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Mukta|Staatliches" rel="stylesheet">
+    <script src="js/app.js"></script>
+</head>
+<body>
+
+<div class="main-container">
+
+    <header class="main-header">
+        <a href="#"><i class="material-icons">
+            list_alt
+        </i></a>To Do List with JavaScript
+    </header>
+
+    <section class="main-todo">
+
+        <input id="taskInput" placeholder="Place your task here">
+
+        <button id="addTaskButton">
+            <i class="material-icons">add_circle_outline</i>
+            Add task
+        </button>
+
+        <div class="counter-container">
+            <div> 
+                Task to finish: <span id="toFinish"></span>
+            </div>
+            <div>
+                <input id="search" placeholder="Find task...">
+                <button class="searchButton">Szukaj</button>
+            </div>
+        </div>
+
+        <ul id="taskList">
+            <!-- dynamic javascript content -->
+        </ul>
+
+        <button id="removeFinishedTasksButton">
+            <i class="material-icons">delete_forever</i>
+            Remove finished tasks
+        </button>
+    </section>
+
+    <footer class="main-footer">
+        Copyright © 2019 Łukasz Rej
+    </footer>
+
+</div>
+
+</body>
+</html>

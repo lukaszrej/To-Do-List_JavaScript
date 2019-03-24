@@ -1,0 +1,296 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    font-family: 'Mukta', sans-serif;
+    font-size: 10px;
+    color: #350202;
+    text-align: left;
+}
+
+body {
+    min-width: 640px;
+}
+
+a {
+    text-decoration: none;
+    color: #350202;
+}
+
+.main-container {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.main-header,
+.main-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-family: 'Staatliches', cursive;
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+}
+.main-header .material-icons {
+    font-size: 5rem;
+    padding: 0.5rem;
+}
+.main-footer {
+    font-size: 2.5rem;
+}
+
+.main-todo {
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+#taskList li {
+    list-style: none;
+}
+
+#taskList {
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    font-size: 2.2rem;
+    padding: 1.2rem 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0.1rem solid #3B7282;
+    border-radius: 0.4rem
+}
+
+input:focus {
+    /*background-color: #eff4f6;*/
+
+    color: #350202;
+}
+
+.item-container {
+    display: flex;
+    border-radius: 0.4rem;
+    overflow: scroll;
+    justify-content: space-between;
+}
+
+.item-container .task {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.item-container .buttons {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.allbuttons_container {
+    display: none;
+}
+
+.showbutton {
+    display: block;
+}
+
+.none {
+    display: none;
+}
+
+.task .star_rate {
+    background: transparent;
+    border: none;
+    color: gold;
+    bottom: 5%;
+    padding-right: 1.2rem;
+}
+
+
+
+button,
+#addTaskButton {
+    display: inline-block;
+    padding: 1.6rem 3.2rem;
+    /* border: 0.16rem solid rgba(255,255,255,0); */
+    border-radius: 0.4rem;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Mukta', sans-serif;
+    color: #FFFFFF;
+    background: #8EB5C0;
+    /* text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35); */
+    text-align: center;
+    transition: all 0.6s;
+    position: relative;
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+}
+
+#addTaskButton:hover {
+    background-color: #6c9eac;
+}
+
+.counter-container {
+    font-size: 2.2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+    border-radius: 0.4rem;
+    background: #F5F5F5;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.counter-container input {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1.8rem;
+    padding: 0.7rem 2rem;
+}
+
+.counter-container button {
+    padding: 1rem 2rem;
+}
+
+/* When clicked on, mark a list item as completed */
+.done {
+    /*background: #F5F5F5;*/
+    text-decoration: line-through;
+}
+
+.star_rate {
+    color: #F5F5F5;
+}
+
+#toFinish {
+    background: #8EB5C0;
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
+    border-radius: 50%;
+    color: white;
+}
+
+.margin-fix {
+    margin-right: 0.34rem;
+}
+
+button .material-icons {
+    position: absolute;
+    bottom: 4%;
+    margin-left: 0.1rem;
+}
+
+.item-container .complete .material-icons {
+    font-size: 2.0rem;
+    bottom: 14%;
+}
+
+.item-container button.edit {
+    background: transparent;
+    border: none;
+    color: #8EB5C0;
+    padding: 0 1rem;
+    font-size: 1.7rem;
+}
+
+.item-container button.close {
+    background: #D46A6A;
+}
+
+.item-container button.close:hover {
+    background: #AA3939;
+}
+
+.item-container .material-icons {
+    font-size: 3.0rem;
+    left: 24%;
+}
+
+
+
+#taskList .complete {
+    background: transparent;
+    border: none;
+    bottom: 5%;
+    padding-right: 0.2rem;
+    color: #8EB5C0;
+    font-size: 1rem;
+}
+
+#addTaskButton,
+#removeFinishedTasksButton {
+    position: relative;
+    width: 100%;
+    font-size: 2.2rem;
+    padding: 0.6rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+#addTaskButton .material-icons,
+#removeFinishedTasksButton .material-icons {
+    position: absolute;
+    font-size: 3.5rem;
+    left: 1.2rem;
+    top: 16%;
+}
+
+#removeFinishedTasksButton {
+    background: #AA3939;
+}
+
+#removeFinishedTasksButton:hover {
+    background: #993333;
+}
+
+#taskList .important {
+    background: gold;
+    border: 1px solid grey;
+}
+
+/*  a n i m a t i o n s  */
+
+
+/* animations classes */
+.tracking-in-contract {
+    -webkit-animation: tracking-in-contract 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+    animation: tracking-in-contract 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+}
+
+/* animations keyframes */
+@-webkit-keyframes tracking-in-contract {
+    0% {
+        letter-spacing: 1em;
+        
+        opacity: 0;
+    }
+    40% {
+        opacity: 0.6;
+    }
+    100% {
+        letter-spacing: normal;
+        opacity: 1;
+    }
+}
+@keyframes tracking-in-contract {
+    0% {
+        letter-spacing: 1em;
+    
+        opacity: 0;
+    }
+    40% {
+        opacity: 0.6;
+    }
+    100% {
+        letter-spacing: normal;
+        opacity: 1;
+    }
+}
