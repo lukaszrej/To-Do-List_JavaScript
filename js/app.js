@@ -163,9 +163,9 @@ var findTask = function() {
 
         for(var i=0; i<li.length;i++){
 
-            var taskText = li[i].innerHTML;
+            var taskText = li[i].innerHTML.toLowerCase();
 
-            if(taskText === inputSearchValue){
+            if(taskText === inputSearchValue.toLowerCase()){
                 foundedValue = li[i];
             }
             console.log(e);
