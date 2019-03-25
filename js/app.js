@@ -162,34 +162,27 @@ var findTask = function() {
         var li = listElements.querySelectorAll('li');
         var inputSearchElement = document.querySelector('#search');
         var inputSearchValue = inputSearchElement.value;
+        var ul = document.querySelector('ul');
 
-        for(var i=0; i<li.length;i++){
+        for(var i=0; i<li.length; i++){
 
-            // var taskText = li[i].innerHTML.toLowerCase();
             var taskText = li[i].querySelector('.to-do').innerHTML.toLowerCase();
 
                 if(taskText === inputSearchValue.toLowerCase()){
                     foundedValue = li[i];
-                    console.log(this.innerHTML = "Show all");
+                    this.innerHTML = "Show all";
                 } else {
                     li[i].remove();
                 }
-
-
-
         }
-
-        var li = document.querySelectorAll('li');
 
         // for(var i=0; i<li.length; i++){
         //     li[i].remove();
         //
         // };
 
-        var ul = document.querySelector('ul');
-
         ul.appendChild(foundedValue);
-        console.log(foundedValue);
+        updateCounter();
 
     });
 };
