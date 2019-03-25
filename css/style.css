@@ -108,10 +108,8 @@ input:focus {
     border: none;
     color: gold;
     bottom: 5%;
-    padding-right: 1.2rem;
+    padding-right: 1.7rem;
 }
-
-
 
 button,
 #addTaskButton {
@@ -161,9 +159,11 @@ button,
 }
 
 .counter-container button {
-    padding: 1rem 2rem;
+    padding: 1rem 0.5rem;
     margin-top: 0;
     margin-bottom: 0;
+    width: 6.5rem;
+    margin-left: 0.5rem;
 }
 
 .counter-container span {
@@ -214,6 +214,7 @@ button .material-icons {
 
 .item-container button.close {
     background: #D46A6A;
+    margin-left: 0.35rem;
 }
 
 .item-container button.close:hover {
@@ -225,15 +226,17 @@ button .material-icons {
     left: 24%;
 }
 
-
-
 #taskList .complete {
-    background: transparent;
+    background: #8EB5C0;
     border: none;
-    bottom: 5%;
-    padding-right: 0.2rem;
-    color: #8EB5C0;
+    color: white;
     font-size: 1rem;
+}
+
+#taskList .complete i {
+    left: 27%;
+    font-size: 3rem;
+    top: 4%;
 }
 
 #addTaskButton,

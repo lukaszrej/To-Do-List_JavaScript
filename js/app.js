@@ -39,14 +39,16 @@ var updateCounter = function () {
 var rateTask = function () {
 
     var rateButton = document.querySelectorAll('.star_rate');
+    var tab = [];
 
     for (var i=0; i < rateButton.length; i++) {
         rateButton[i].onclick = function () {
             var div = this.parentElement.parentElement;
-            console.log(div);
             div.classList.toggle("important");
         }
+
     }
+
 };
 
 // Edit task
@@ -165,10 +167,11 @@ var findTask = function() {
 
             var taskText = li[i].innerHTML.toLowerCase();
 
-            if(taskText === inputSearchValue.toLowerCase()){
-                foundedValue = li[i];
-            }
-            console.log(e);
+                if(taskText === inputSearchValue.toLowerCase()){
+                    foundedValue = li[i];
+                }
+                // console.log(e);
+
         }
 
         console.log(foundedValue,'znalezione');
@@ -177,6 +180,7 @@ var findTask = function() {
 
         for(var i=0; i<li.length; i++){
             li[i].remove();
+
         };
 
         var ul = document.querySelector('ul');
