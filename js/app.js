@@ -159,31 +159,35 @@ var findTask = function() {
 
     searchButton.addEventListener('click', function(e){
         var listElements = document.querySelector("#taskList");
-        var li = listElements.querySelectorAll('.to-do');
+        var li = listElements.querySelectorAll('li');
         var inputSearchElement = document.querySelector('#search');
         var inputSearchValue = inputSearchElement.value;
 
         for(var i=0; i<li.length;i++){
 
-            var taskText = li[i].innerHTML.toLowerCase();
+            // var taskText = li[i].innerHTML.toLowerCase();
+            var taskText = li[i].querySelector('.to-do').innerHTML.toLowerCase();
 
                 if(taskText === inputSearchValue.toLowerCase()){
                     foundedValue = li[i];
+                    console.log(this.innerHTML = "Show all");
+                } else {
+                    li[i].remove();
                 }
-                // console.log(e);
+
+
 
         }
 
-        console.log(foundedValue,'znalezione');
-
         var li = document.querySelectorAll('li');
 
-        for(var i=0; i<li.length; i++){
-            li[i].remove();
-
-        };
+        // for(var i=0; i<li.length; i++){
+        //     li[i].remove();
+        //
+        // };
 
         var ul = document.querySelector('ul');
+
         ul.appendChild(foundedValue);
         console.log(foundedValue);
 
@@ -271,6 +275,7 @@ document.addEventListener("DOMContentLoaded", function () {
             buttonEdit.classList.add("edit");
             var editIcon = document.createElement('i');
             editIcon.classList.add("fas", "fa-edit");
+            editIcon.style.fontWeight = "300";
 
             // completeButton
             var newButtonComplete = document.createElement("button");

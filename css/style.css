@@ -20,6 +20,10 @@ a {
     color: #350202;
 }
 
+.fa, .fas {
+    font-weight: 300;
+}
+
 .main-container {
     max-width: 1024px;
     margin: 0 auto;
@@ -107,7 +111,6 @@ input:focus {
     background: transparent;
     border: none;
     color: gold;
-    bottom: 5%;
     padding-right: 1.7rem;
 }
 
@@ -207,7 +210,7 @@ button .material-icons {
 .item-container button.edit {
     background: transparent;
     border: none;
-    color: #8EB5C0;
+    color: #350202;
     padding: 0 1rem;
     font-size: 1.7rem;
 }
@@ -266,8 +269,12 @@ button .material-icons {
 }
 
 #taskList .important {
-    background: gold;
-    border: 1px solid grey;
+    background: gainsboro;
+    color: white;
+}
+
+#taskList .important button.edit {
+    color: white;
 }
 
 /*  a n i m a t i o n s  */
