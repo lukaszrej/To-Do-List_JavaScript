@@ -73,15 +73,13 @@ input {
 }
 
 input:focus {
-    /*background-color: #eff4f6;*/
-
     color: #350202;
 }
 
 .item-container {
     display: flex;
     border-radius: 0.4rem;
-    overflow: scroll;
+    /*overflow: scroll;*/
     justify-content: space-between;
 }
 
@@ -174,9 +172,7 @@ button,
     margin-right: 1rem;
 }
 
-/* When clicked on, mark a list item as completed */
 .done {
-    /*background: #F5F5F5;*/
     text-decoration: line-through;
 }
 
