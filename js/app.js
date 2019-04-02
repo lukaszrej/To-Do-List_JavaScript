@@ -35,54 +35,15 @@ var updateCounter = function () {
     counterDisplay.innerHTML = counter;
 };
 
-// Rate task
-var rateTask = function () {
-
-    var rateButton = document.querySelectorAll('.star_rate');
-
-    for (var i=0; i < rateButton.length; i++) {
-        rateButton[i].onclick = function () {
-            var div = this.parentElement.parentElement;
-            div.classList.toggle("important");
-
-            var lis = document.querySelectorAll('li');
-
-            var tab = [];
-            var tabImportant = [];
-            for (var i=0; i<lis.length; i++) {
-                tab.push(lis[i]);
-
-                if (lis[i].classList.value === 'item-container tracking-in-contract important') {
-                    console.log('eeeeee');
-
-
-
-                    tabImportant.push(lis[i]);
-                    console.log(tabImportant);
-                }
-
-            }
-            console.log(tab);
-
-        };
-
-
-    }
-
-};
-
 // Edit task
 var editTask = function () {
     var editButtons = document.getElementsByClassName('edit');
-    var rateButton = document.querySelectorAll('.star_rate');
 
     for (var i=0; i<editButtons.length; i++) {
         editButtons[i].onclick = function () {
 
-            // non-editable edit- and rate-buttons
+            // non-editable edit-button
             this.setAttribute('contenteditable', 'false');
-            var rateButton = this.previousElementSibling.previousElementSibling;
-            rateButton.setAttribute('contenteditable', 'false');
 
             // editable / non-editable task
             var div = this.parentElement;
@@ -199,7 +160,6 @@ var findTask = function() {
 };
 
 
-
 // m a i n
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -267,13 +227,6 @@ document.addEventListener("DOMContentLoaded", function () {
             taskTitle.innerHTML = inputValue.value;
 
             // creating buttons
-            // starButton
-            // var starButton = document.createElement('button');
-            // starButton.classList.add("star_rate");
-            // var starIcon = document.createElement('i');
-            // starIcon.innerHTML = "stars";
-            // starIcon.classList.add('material-icons');
-
             // editButton
             var buttonEdit = document.createElement("button");
             buttonEdit.classList.add("edit");
@@ -308,18 +261,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // appending
             // appending task title and star/edit buttons to the task
-            // task.appendChild(starButton);
             task.appendChild(taskTitle);
             task.appendChild(buttonEdit);
 
             // appending icons to the buttons
-            // starButton.appendChild(starIcon);
             buttonEdit.appendChild(editIcon);
             newButtonComplete.appendChild(completeIcon);
             newButtonClose.appendChild(deleteIcon);
 
             // appending sub-button-containers to the button-container
-
             buttonContainer.appendChild(newButtonComplete);
             buttonContainer.appendChild(newButtonClose);
 
@@ -330,7 +280,6 @@ document.addEventListener("DOMContentLoaded", function () {
             // appending list-item to the list
             taskList.appendChild(newLi);
 
-            rateTask();
             markAsCompleted();
             deleteFromList();
         }
