@@ -79,7 +79,6 @@ input:focus {
 .item-container {
     display: flex;
     border-radius: 0.4rem;
-    /*overflow: scroll;*/
     justify-content: space-between;
 }
 
@@ -117,14 +116,12 @@ button,
 #addTaskButton {
     display: inline-block;
     padding: 1.6rem 3.2rem;
-    /* border: 0.16rem solid rgba(255,255,255,0); */
     border-radius: 0.4rem;
     box-sizing: border-box;
     text-decoration: none;
     font-family: 'Mukta', sans-serif;
     color: #FFFFFF;
     background: #8EB5C0;
-    /* text-shadow: 0 0.04em 0.04em rgba(0,0,0,0.35); */
     text-align: center;
     transition: all 0.6s;
     position: relative;
@@ -274,8 +271,7 @@ button .material-icons {
     color: white;
 }
 
-/*  a n i m a t i o n s  */
-
+/*  a n i m a t i o n  */
 
 /* animations classes */
 .tracking-in-contract {

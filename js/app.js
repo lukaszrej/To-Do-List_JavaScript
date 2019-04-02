@@ -2,7 +2,6 @@
 
 // Validate input
 function validateInput(inputValue) {
-
     if (inputValue.value === '') {
         alert('Write something!');
         return false;
@@ -108,7 +107,7 @@ var deleteFromList = function() {
 };
 
 // Delete all completed items
-var deletAllItems = function() {
+var deleteAllItems = function() {
     var removeAll = document.getElementById('removeFinishedTasksButton');
     var taskList = document.getElementById('taskList');
 
@@ -148,17 +147,11 @@ var findTask = function() {
                 }
         }
 
-        // for(var i=0; i<li.length; i++){
-        //     li[i].remove();
-        //
-        // };
-
         ul.appendChild(foundedValue);
         updateCounter();
 
     });
 };
-
 
 // m a i n
 
@@ -170,41 +163,6 @@ document.addEventListener("DOMContentLoaded", function () {
     markAsCompleted();
     deleteFromList();
     findTask();
-
-    // Find task: working - raw form
-    // var searchButton = document.querySelector('.searchButton');
-    // var foundedValue = "";
-    //
-    // searchButton.addEventListener('click', function(e){
-    //     var listElements = document.querySelector("#taskList");
-    //     var li = listElements.querySelectorAll('.to-do');
-    //     var inputSearchElement = document.querySelector('#search');
-    //     var inputSearchValue = inputSearchElement.value;
-    //
-    //     for(var i=0; i<li.length;i++){
-    //
-    //         var taskText = li[i].innerHTML;
-    //
-    //         if(taskText === inputSearchValue){
-    //          foundedValue = li[i];
-    //         }
-    //         console.log(e);
-    //     }
-    //
-    //     console.log(foundedValue,'znalezione');
-    //
-    //     var li = document.querySelectorAll('li');
-    //
-    //     for(var i=0; i<li.length; i++){
-    //         li[i].remove();
-    //     };
-    //
-    //     var ul = document.querySelector('ul');
-    //     ul.appendChild(foundedValue);
-    //     console.log(foundedValue);
-    //
-    //     });
-
 
     // Create a new list item
     addTaskButton.addEventListener('click', function () {
@@ -291,7 +249,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
-    deletAllItems();
+    deleteAllItems();
     updateCounter();
 
 });
