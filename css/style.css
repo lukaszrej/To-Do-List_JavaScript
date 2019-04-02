@@ -86,6 +86,7 @@ input:focus {
 .item-container .task {
     display: flex;
     justify-content: flex-start;
+    padding-left: 2rem;
 }
 
 .item-container .buttons {
