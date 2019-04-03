@@ -167,9 +167,9 @@ var sortTasks = function() {
         if (this.innerText === 'SORT') {
 
             var labels = [];
+
             for (var i=0; i<lis.length; i++) {
                 var currentLis = lis[i].querySelector('h2').innerText.toLowerCase();
-                console.log(currentLis);
                 labels.push(currentLis);
 
                 var sortedLabels = labels.sort();
@@ -184,24 +184,17 @@ var sortTasks = function() {
                 this.innerText = "UNSORT";
             }
 
-
-
         } else if (this.innerText === 'UNSORT') {
-
             for (var i=0; i<lis.length; i++) {
                 ul.appendChild(lis[i]);
             }
+
             this.innerText = 'SORT';
-
-
-
-
         }
 
     })
 
 };
-
 
 // m a i n
 
