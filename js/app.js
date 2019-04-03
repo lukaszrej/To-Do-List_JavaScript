@@ -153,6 +153,56 @@ var findTask = function() {
     });
 };
 
+// Sort tasks
+var sortTasks = function() {
+    var lis = document.querySelectorAll('.item-container');
+    var ul = document.querySelector('#taskList');
+    var sortButton = document.querySelector('#sort');
+
+    console.log(lis); // lisow nie ma, bo nic nie ma w liście
+
+    sortButton.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        if (this.innerText === 'SORT') {
+
+            var labels = [];
+            for (var i=0; i<lis.length; i++) {
+                var currentLis = lis[i].querySelector('h2').innerText.toLowerCase();
+                console.log(currentLis);
+                labels.push(currentLis);
+
+                var sortedLabels = labels.sort();
+            }
+
+            for (var i=0; i<sortedLabels.length; i++) {
+                for (var j=0; j<lis.length; j++) {
+                    if (sortedLabels[i] === lis[j].querySelector('h2').innerText.toLowerCase()) {
+                        ul.appendChild(lis[j]);
+                    }
+                }
+                this.innerText = "UNSORT";
+            }
+
+
+
+        } else if (this.innerText === 'UNSORT') {
+
+            for (var i=0; i<lis.length; i++) {
+                ul.appendChild(lis[i]);
+            }
+            this.innerText = 'SORT';
+
+
+
+
+        }
+
+    })
+
+};
+
+
 // m a i n
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -244,6 +294,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         inputValue.value = "";
 
+        sortTasks();
         updateCounter();
         editTask();
 
