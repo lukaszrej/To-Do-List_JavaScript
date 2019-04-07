@@ -253,22 +253,22 @@ document.addEventListener("DOMContentLoaded", function () {
             editIcon.style.fontWeight = "300";
 
             // completeButton
-            var newButtonComplete = document.createElement("button");
-            newButtonComplete.classList.add('complete');
+            var completeButton = document.createElement("button");
+            completeButton.classList.add('complete');
             var completeIcon = document.createElement('i');
             completeIcon.innerHTML = "done";
             completeIcon.classList.add('material-icons');
-            newButtonComplete.addEventListener('click', function () {
+            completeButton.addEventListener('click', function () {
                 markAsCompleted();
             });
 
             // deleteButton
-            var newButtonClose = document.createElement("button");
-            newButtonClose.classList.add('close');
+            var deleteButton = document.createElement("button");
+            deleteButton.classList.add('close');
             var deleteIcon = document.createElement('i');
             deleteIcon.innerHTML = "delete";
             deleteIcon.classList.add('material-icons');
-            newButtonClose.addEventListener('click', function () {
+            deleteButton.addEventListener('click', function () {
                 deleteFromList();
                 updateCounter();
             });
@@ -284,12 +284,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // appending icons to the buttons
             buttonEdit.appendChild(editIcon);
-            newButtonComplete.appendChild(completeIcon);
-            newButtonClose.appendChild(deleteIcon);
+            completeButton.appendChild(completeIcon);
+            deleteButton.appendChild(deleteIcon);
 
             // appending sub-button-containers to the button-container
-            buttonContainer.appendChild(newButtonComplete);
-            buttonContainer.appendChild(newButtonClose);
+            buttonContainer.appendChild(completeButton);
+            buttonContainer.appendChild(deleteButton);
 
             // appending the button-container and new-task to the list-item
             newLi.appendChild(task);
@@ -298,19 +298,16 @@ document.addEventListener("DOMContentLoaded", function () {
             // appending list-item to the list
             taskList.appendChild(newLi);
 
-            markAsCompleted();
-            deleteFromList();
-            console.log(lis);
-
-
         }
 
         inputValue.value = "";
 
-        updateCounter();
+        markAsCompleted();
+        deleteFromList();
         editTask();
-    });
+        updateCounter();
 
+    });
 
 
     var sortButton = document.querySelector('#sort');
