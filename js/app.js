@@ -15,15 +15,17 @@ document.addEventListener("DOMContentLoaded", function () {
     var removeAll = document.getElementById('removeFinishedTasksButton');
 
     var searchButton = document.querySelector('.searchButton');
+    var oldItems = [];
+
 
     // f u n c t i o n s
 
     // Validate input
-    var validateInput = function(inputValue) {
+    var validateInput = function (inputValue) {
         if (inputValue.value === '') {
             alert('Write something!');
             return false;
-        } else if (inputValue.value.length <5 || inputValue.value.length >100) {
+        } else if (inputValue.value.length < 5 || inputValue.value.length > 100) {
             alert('Be specific, use between 5 to 100 characters to describe your task!');
             return false;
         }
@@ -37,10 +39,10 @@ document.addEventListener("DOMContentLoaded", function () {
         var counter = document.getElementsByClassName('to-do').length;
         var counterElement = document.getElementsByClassName('to-do');
 
-        for (var i=0; i<counter; i++) {
+        for (var i = 0; i < counter; i++) {
             var counterClasses = counterElement[i].classList;
-            for (var j=0; j<counterClasses.length; j++) {
-                if (counterClasses[j] === "done" ) {
+            for (var j = 0; j < counterClasses.length; j++) {
+                if (counterClasses[j] === "done") {
                     finishedTasksCounter++;
                 }
             }
@@ -53,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Edit task
     var editTask = function () {
-        for (var i=0; i<editButtons.length; i++) {
+        for (var i = 0; i < editButtons.length; i++) {
             editButtons[i].onclick = function () {
 
                 // non-editable edit-button
@@ -82,8 +84,8 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     // Mark as completed
-    var markAsCompleted = function() {
-        for (var i=0; i < completeButton.length; i++) {
+    var markAsCompleted = function () {
+        for (var i = 0; i < completeButton.length; i++) {
             completeButton[i].onclick = function () {
                 var divText = this.parentElement.parentElement.querySelector('h2');
 
@@ -105,10 +107,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
+    // usunac tez z old items
     // Delete an item from the list
-    var deleteFromList = function() {
+    var deleteFromList = function () {
         for (var i = 0; i < deleteButton.length; i++) {
-            deleteButton[i].onclick = function() {
+            deleteButton[i].onclick = function () {
                 var div = this.parentElement.parentElement;
                 div.remove();
 
@@ -118,11 +121,11 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     // Delete all completed items
-    var deleteAllItems = function() {
+    var deleteAllItems = function () {
         removeAll.addEventListener('click', function () {
             var completedLis = taskList.querySelectorAll('.done');
 
-            for (var i=0; i<completedLis.length; i++) {
+            for (var i = 0; i < completedLis.length; i++) {
                 completedLis[i].parentElement.parentElement.remove();
             }
 
@@ -131,81 +134,59 @@ document.addEventListener("DOMContentLoaded", function () {
 
     };
 
-
     // Find task
-    var findTask = function() {
-        searchButton.addEventListener('click', function(e){
-            e.preventDefault();
+    var findTask = function () {
 
-            var li = taskList.querySelectorAll('li');
-            var inputSearchElement = document.querySelector('#search');
-            var inputSearchValue = inputSearchElement.value;
-            var foundedValue = "";
+        var li = taskList.querySelectorAll('li');
+        var inputSearchElement = document.querySelector('#search');
+        var inputSearchValue = inputSearchElement.value;
+        var foundedValue = "";
 
-            for (var i=0; i<li.length; i++) {
+
+        if (searchButton.innerText === "Find") {
+            for (var i = 0; i < li.length; i++) {
+
+                oldItems.push(li[i]);
 
                 var taskText = li[i].querySelector('.to-do').innerHTML.toLowerCase();
 
-                    if(taskText === inputSearchValue.toLowerCase()){
-                        foundedValue = li[i];
-                        this.innerHTML = "Show all";
-                    } else {
-                        li[i].remove();
-                    }
+                if (taskText === inputSearchValue.toLowerCase()) {
+                    foundedValue = li[i];
+                    searchButton.innerHTML = "Show all";
+                } else {
+                    li[i].remove();
+                }
             }
-
 
             taskList.appendChild(foundedValue);
             updateCounter();
 
-            if (this.innerHTML === "Show all") {
-                this.addEventListener('click', function (array) {
 
-                    for (var i=0; i<li.length; i++) {
-                        li[i].remove();
-                        taskList.appendChild(li[i]);
-                    }
+        } else if (searchButton.innerText === "Show all") {
 
-                    this.innerHTML = "Find";
-                    updateCounter();
-
-                });
+            for (var i = 0; i < oldItems.length; i++) {
+                taskList.appendChild(oldItems[i]);
             }
 
+            searchButton.innerHTML = "Find";
+            updateCounter();
 
-        });
-
+        }
 
     };
 
-
-
     // Sort tasks
-    var sortTasks = function() {
-        var lis = document.querySelectorAll('.item-container');
-        var ul = document.querySelector('#taskList');
+    var sortTasks = function () {
+        var lis = taskList.querySelectorAll('.item-container');
         var sortButton = document.querySelector('#sort');
 
-        var oldLis = [];
-        for (var i=0; i<lis.length; i++) {
-            oldLis.push(lis[i]);
+        // var oldLis = [];
+        // for (var i = 0; i < lis.length; i++) {
+        //     oldLis.push(lis[i]);
+        //
+        // }
+        // console.log(lis);
 
-        }
-        console.log(lis);
-
-
-        var labels = [];
-
-        for (var i=0; i<lis.length; i++) {
-            // oldLis.push(lis[i]);
-
-            var currentLis = lis[i].querySelector('h2').innerText.toLowerCase();
-            labels.push(currentLis);
-
-            var sortedLabels = labels.sort();
-        }
-
-        // console.log(oldLis);
 
 
 
@@ -213,40 +194,52 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (sortButton.innerText === 'SORT') {
 
+            var labels = [];
 
-                for (var i=0; i<sortedLabels.length; i++) {
-                    for (var j=0; j<lis.length; j++) {
-                        if (sortedLabels[i] === lis[j].querySelector('h2').innerText.toLowerCase()) {
-                            ul.appendChild(lis[j]);
-                        }
+            for (var i = 0; i < lis.length; i++) {
+
+                var currentLis = lis[i].querySelector('h2').innerText.toLowerCase();
+                labels.push(currentLis);
+
+                var sortedLabels = labels.sort();
+            }
+
+            for (var i = 0; i < sortedLabels.length; i++) {
+                for (var j = 0; j < lis.length; j++) {
+
+                    oldItems.push(lis[i]);
+
+                    if (sortedLabels[i] === lis[j].querySelector('h2').innerText.toLowerCase()) {
+                        taskList.appendChild(lis[j]);
                     }
-                    // sortButton.innerHTML = "UNSORT";
-
                 }
+            }
 
-                sortButton.innerText = "UNSORT";
+            sortButton.innerText = "UNSORT";
+
+        } else if (sortButton.innerText === 'UNSORT') {
+
+            for (var i = 0; i < lis.length; i++) {
+
+                lis[i].remove();
+
+            }
+
+            for (var i = 0; i < oldItems.length; i++) {
+                taskList.appendChild(oldItems[i]);
+            }
 
 
-            } else if (sortButton.innerText === 'UNSORT') {
+            oldItems = [];
 
-            console.log('ej ej')
-
-                for (var i=0; i<lis.length; i++) {
-
-                    oldLis.push(lis[i]);
-                    // ul.appendChild(oldLis[i]);
-                }
-
-                sortButton.innerText = 'SORT';
+            sortButton.innerText = 'SORT';
 
         }
 
     };
 
 
-
     // m a i n
-
 
     // Create a new list item
     addTaskButton.addEventListener('click', function () {
@@ -328,26 +321,27 @@ document.addEventListener("DOMContentLoaded", function () {
         updateCounter();
 
 
-        var li = taskList.querySelectorAll('li');
-        var allTasks = [];
-
-        for (var i=0; i<li.length; i++) {
-            allTasks.push(li[i]);
-        }
-
-        console.log(allTasks);
-
     });
 
+    var li = taskList.querySelectorAll('li');
+    var allTasks = [];
 
+    for (var i = 0; i < li.length; i++) {
+        allTasks.push(li[i]);
+    }
+
+    console.log(allTasks);
 
     var sortButton = document.querySelector('#sort');
     sortButton.addEventListener('click', function () {
         sortTasks();
     });
 
+    searchButton.addEventListener('click', function () {
+        findTask();
 
-    findTask();
+    });
+
     deleteAllItems();
     updateCounter();
 
