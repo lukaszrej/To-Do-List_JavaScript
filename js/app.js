@@ -15,8 +15,6 @@ document.addEventListener("DOMContentLoaded", function () {
     var removeAll = document.getElementById('removeFinishedTasksButton');
 
     var searchButton = document.querySelector('.searchButton');
-    var foundedValue = "";
-
 
     // f u n c t i o n s
 
@@ -133,6 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     };
 
+
     // Find task
     var findTask = function() {
         searchButton.addEventListener('click', function(e){
@@ -141,24 +140,45 @@ document.addEventListener("DOMContentLoaded", function () {
             var li = taskList.querySelectorAll('li');
             var inputSearchElement = document.querySelector('#search');
             var inputSearchValue = inputSearchElement.value;
+            var foundedValue = "";
 
-            for(var i=0; i<li.length; i++){
+            for (var i=0; i<li.length; i++) {
 
                 var taskText = li[i].querySelector('.to-do').innerHTML.toLowerCase();
 
                     if(taskText === inputSearchValue.toLowerCase()){
                         foundedValue = li[i];
                         this.innerHTML = "Show all";
+                    } else {
+                        li[i].remove();
                     }
             }
 
+
             taskList.appendChild(foundedValue);
             updateCounter();
+
+            if (this.innerHTML === "Show all") {
+                this.addEventListener('click', function (array) {
+
+                    for (var i=0; i<li.length; i++) {
+                        li[i].remove();
+                        taskList.appendChild(li[i]);
+                    }
+
+                    this.innerHTML = "Find";
+                    updateCounter();
+
+                });
+            }
+
 
         });
 
 
     };
+
+
 
     // Sort tasks
     var sortTasks = function() {
@@ -306,6 +326,16 @@ document.addEventListener("DOMContentLoaded", function () {
         deleteFromList();
         editTask();
         updateCounter();
+
+
+        var li = taskList.querySelectorAll('li');
+        var allTasks = [];
+
+        for (var i=0; i<li.length; i++) {
+            allTasks.push(li[i]);
+        }
+
+        console.log(allTasks);
 
     });
 
