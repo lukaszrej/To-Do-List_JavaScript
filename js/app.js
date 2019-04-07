@@ -159,21 +159,33 @@ var sortTasks = function() {
     var ul = document.querySelector('#taskList');
     var sortButton = document.querySelector('#sort');
 
-    console.log(lis); // lisow nie ma, bo nic nie ma w liście
+    var oldLis = [];
+    for (var i=0; i<lis.length; i++) {
+        oldLis.push(lis[i]);
 
-    sortButton.addEventListener('click', function (e) {
-        e.preventDefault();
+    }
+    console.log(lis);
 
-        if (this.innerText === 'SORT') {
 
-            var labels = [];
+    var labels = [];
 
-            for (var i=0; i<lis.length; i++) {
-                var currentLis = lis[i].querySelector('h2').innerText.toLowerCase();
-                labels.push(currentLis);
+    for (var i=0; i<lis.length; i++) {
+        // oldLis.push(lis[i]);
 
-                var sortedLabels = labels.sort();
-            }
+        var currentLis = lis[i].querySelector('h2').innerText.toLowerCase();
+        labels.push(currentLis);
+
+        var sortedLabels = labels.sort();
+    }
+
+    // console.log(oldLis);
+
+
+
+
+
+    if (sortButton.innerText === 'SORT') {
+
 
             for (var i=0; i<sortedLabels.length; i++) {
                 for (var j=0; j<lis.length; j++) {
@@ -181,38 +193,43 @@ var sortTasks = function() {
                         ul.appendChild(lis[j]);
                     }
                 }
-                this.innerText = "UNSORT";
+                // sortButton.innerHTML = "UNSORT";
+
             }
 
-        } else if (this.innerText === 'UNSORT') {
+            sortButton.innerText = "UNSORT";
+
+
+        } else if (sortButton.innerText === 'UNSORT') {
+
+        console.log('ej ej')
+
             for (var i=0; i<lis.length; i++) {
-                ul.appendChild(lis[i]);
+
+                oldLis.push(lis[i]);
+                // ul.appendChild(oldLis[i]);
             }
 
-            this.innerText = 'SORT';
-        }
+            sortButton.innerText = 'SORT';
 
-    })
+    }
 
 };
+
+
 
 // m a i n
 
 document.addEventListener("DOMContentLoaded", function () {
+    var lis = document.querySelectorAll('li');
     var taskList = document.getElementById('taskList');
     var addTaskButton = document.getElementById('addTaskButton');
 
-    editTask();
-    markAsCompleted();
-    deleteFromList();
-    findTask();
 
     // Create a new list item
     addTaskButton.addEventListener('click', function () {
 
         var inputValue = document.getElementById('taskInput');
-
-        inputValue.value;
 
         if (validateInput(inputValue)) {
 
@@ -283,16 +300,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
             markAsCompleted();
             deleteFromList();
+            console.log(lis);
+
+
         }
 
         inputValue.value = "";
 
-        sortTasks();
         updateCounter();
         editTask();
-
     });
 
+
+
+    var sortButton = document.querySelector('#sort');
+    sortButton.addEventListener('click', function () {
+        sortTasks();
+    });
+
+    findTask();
     deleteAllItems();
     updateCounter();
 
