@@ -300,7 +300,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     searchButton.addEventListener('click', function () {
-        findTask(searchButton, oldItems, counterToDisplay);
+        var inputSearchElement = document.querySelector('#search');
+
+        if (validateInput(inputSearchElement)) {
+            findTask(searchButton, oldItems, counterToDisplay);
+        }
     });
 
     deleteAllItems(removeAll, counterToDisplay);
