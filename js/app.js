@@ -1,3 +1,119 @@
+// f u n c t i o n s
+
+// Validate input
+var validateInput = function (inputValue) {
+    if (inputValue.value === '') {
+        alert('Write something!');
+        return false;
+    } else if (inputValue.value.length < 5 || inputValue.value.length > 100) {
+        alert('Be specific, use between 5 to 100 characters to describe your task!');
+        return false;
+    }
+
+    return true;
+};
+
+// Count to-dos
+var updateCounter = function (counterDisplay) {
+    var finishedTasksCounter = 0;
+    var counter = document.getElementsByClassName('to-do').length;
+    var counterElement = document.getElementsByClassName('to-do');
+
+    for (var i = 0; i < counter; i++) {
+        var counterClasses = counterElement[i].classList;
+        for (var j = 0; j < counterClasses.length; j++) {
+            if (counterClasses[j] === "done") {
+                finishedTasksCounter++;
+            }
+        }
+    }
+
+    counter = counter - finishedTasksCounter;
+
+    counterDisplay.innerHTML = counter;
+};
+
+// Edit task
+var editTask = function (buttons) {
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].onclick = function () {
+
+            // non-editable edit-button
+            this.setAttribute('contenteditable', 'false');
+
+            // editable / non-editable task
+            var div = this.parentElement;
+
+            // allow / don't allow to edit task
+            if (this.firstChild.classList.value === "fas fa-edit") {
+                // change the icons
+                this.firstChild.classList.remove("fa-edit");
+                this.firstChild.classList.add("fa-save");
+                // make the task editable
+                div.setAttribute('contenteditable', 'true');
+            } else if (this.firstChild.classList.value === "fas fa-save") {
+                // change the icons
+                this.firstChild.classList.remove("fa-save");
+                this.firstChild.classList.add("fa-edit");
+                // make the task non-editable
+                div.setAttribute('contenteditable', 'false');
+            }
+
+        };
+    }
+};
+
+// Mark as completed
+var markAsCompleted = function (buttons, counterDisplay) {
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].onclick = function () {
+            var divText = this.parentElement.parentElement.querySelector('h2');
+
+            var editIcon = this.parentElement.previousElementSibling.querySelector('.edit i');
+            divText.classList.toggle('done');
+            var divTask = divText.parentElement.parentElement;
+            if (divTask.firstElementChild.hasAttribute('contenteditable')) {
+                divTask.firstElementChild.setAttribute('contenteditable', 'false');
+                editIcon.classList.remove('fa-save');
+                editIcon.classList.add('fa-edit');
+            }
+
+            // if item is marked as completed remove the edit button
+            var editButtonToRemove = divText.nextElementSibling;
+            editButtonToRemove.classList.toggle('none');
+
+            updateCounter(counterDisplay);
+        }
+    }
+};
+
+// Delete an item from the list
+var deleteFromList = function (buttons, counterDisplay) {
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].onclick = function () {
+            var div = this.parentElement.parentElement;
+            div.remove();
+
+            updateCounter(counterDisplay);
+        }
+    }
+};
+
+// Delete all completed items
+var deleteAllItems = function (button, counterDisplay) {
+    button.addEventListener('click', function () {
+        var taskList = document.getElementById('taskList');
+        var completedLis = taskList.querySelectorAll('.done');
+
+        for (var i = 0; i < completedLis.length; i++) {
+            completedLis[i].parentElement.parentElement.remove();
+        }
+
+        updateCounter(counterDisplay);
+    });
+
+};
+
 document.addEventListener("DOMContentLoaded", function () {
 
     // v a r i a b l e s
@@ -6,11 +122,11 @@ document.addEventListener("DOMContentLoaded", function () {
     var taskList = document.getElementById('taskList');
     var addTaskButton = document.getElementById('addTaskButton');
 
-    var counterDisplay = document.getElementById('toFinish');
+    var counterToDisplay = document.getElementById('toFinish');
 
     var editButtons = document.getElementsByClassName('edit');
-    var completeButton = document.getElementsByClassName('complete');
-    var deleteButton = document.getElementsByClassName('close');
+    var completeButtons = document.getElementsByClassName('complete');
+    var deleteButtons = document.getElementsByClassName('close');
 
     var removeAll = document.getElementById('removeFinishedTasksButton');
 
@@ -21,121 +137,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // f u n c t i o n s
-
-    // Validate input
-    var validateInput = function (inputValue) {
-        if (inputValue.value === '') {
-            alert('Write something!');
-            return false;
-        } else if (inputValue.value.length < 5 || inputValue.value.length > 100) {
-            alert('Be specific, use between 5 to 100 characters to describe your task!');
-            return false;
-        }
-
-        return true;
-    };
-
-    // Count to-dos
-    var updateCounter = function () {
-        var finishedTasksCounter = 0;
-        var counter = document.getElementsByClassName('to-do').length;
-        var counterElement = document.getElementsByClassName('to-do');
-
-        for (var i = 0; i < counter; i++) {
-            var counterClasses = counterElement[i].classList;
-            for (var j = 0; j < counterClasses.length; j++) {
-                if (counterClasses[j] === "done") {
-                    finishedTasksCounter++;
-                }
-            }
-        }
-
-        counter = counter - finishedTasksCounter;
-
-        counterDisplay.innerHTML = counter;
-    };
-
-    // Edit task
-    var editTask = function () {
-        for (var i = 0; i < editButtons.length; i++) {
-            editButtons[i].onclick = function () {
-
-                // non-editable edit-button
-                this.setAttribute('contenteditable', 'false');
-
-                // editable / non-editable task
-                var div = this.parentElement;
-
-                // allow / don't allow to edit task
-                if (this.firstChild.classList.value === "fas fa-edit") {
-                    // change the icons
-                    this.firstChild.classList.remove("fa-edit");
-                    this.firstChild.classList.add("fa-save");
-                    // make the task editable
-                    div.setAttribute('contenteditable', 'true');
-                } else if (this.firstChild.classList.value === "fas fa-save") {
-                    // change the icons
-                    this.firstChild.classList.remove("fa-save");
-                    this.firstChild.classList.add("fa-edit");
-                    // make the task non-editable
-                    div.setAttribute('contenteditable', 'false');
-                }
-
-            };
-        }
-    };
-
-    // Mark as completed
-    var markAsCompleted = function () {
-        for (var i = 0; i < completeButton.length; i++) {
-            completeButton[i].onclick = function () {
-                var divText = this.parentElement.parentElement.querySelector('h2');
-
-                var editIcon = this.parentElement.previousElementSibling.querySelector('.edit i');
-                divText.classList.toggle('done');
-                var divTask = divText.parentElement.parentElement;
-                if (divTask.firstElementChild.hasAttribute('contenteditable')) {
-                    divTask.firstElementChild.setAttribute('contenteditable', 'false');
-                    editIcon.classList.remove('fa-save');
-                    editIcon.classList.add('fa-edit');
-                }
-
-                // if item is marked as completed remove the edit button
-                var editButtonToRemove = divText.nextElementSibling;
-                editButtonToRemove.classList.toggle('none');
-
-                updateCounter();
-            }
-        }
-    };
-
-    // Delete an item from the list
-    var deleteFromList = function () {
-        for (var i = 0; i < deleteButton.length; i++) {
-            deleteButton[i].onclick = function () {
-                var div = this.parentElement.parentElement;
-                div.remove();
-
-                console.log(oldItems);
-
-                updateCounter();
-            }
-        }
-    };
-
-    // Delete all completed items
-    var deleteAllItems = function () {
-        removeAll.addEventListener('click', function () {
-            var completedLis = taskList.querySelectorAll('.done');
-
-            for (var i = 0; i < completedLis.length; i++) {
-                completedLis[i].parentElement.parentElement.remove();
-            }
-
-            updateCounter();
-        });
-
-    };
 
     // Find task
     var findTask = function () {
@@ -160,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             taskList.appendChild(foundedValue);
-            updateCounter();
+            updateCounter(counterToDisplay);
 
 
         } else if (searchButton.innerText === "Show all") {
@@ -169,7 +170,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             searchButton.innerHTML = "Find";
-            updateCounter();
+            updateCounter(counterToDisplay);
         }
 
     };
@@ -183,7 +184,6 @@ document.addEventListener("DOMContentLoaded", function () {
             var labels = [];
 
             for (var i = 0; i < lis.length; i++) {
-
                 var currentLis = lis[i].querySelector('h2').innerText.toLowerCase();
                 labels.push(currentLis);
 
@@ -204,7 +204,6 @@ document.addEventListener("DOMContentLoaded", function () {
             sortButton.innerText = "UNSORT";
 
         } else if (sortButton.innerText === 'UNSORT') {
-
             for (var i = 0; i < lis.length; i++) {
                 lis[i].remove();
             }
@@ -218,7 +217,6 @@ document.addEventListener("DOMContentLoaded", function () {
             sortButton.innerText = 'SORT';
 
         }
-
     };
 
 
@@ -255,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function () {
             completeIcon.innerHTML = "done";
             completeIcon.classList.add('material-icons');
             completeButton.addEventListener('click', function () {
-                markAsCompleted();
+                markAsCompleted(completeButtons, counterToDisplay);
             });
 
             // deleteButton
@@ -265,8 +263,8 @@ document.addEventListener("DOMContentLoaded", function () {
             deleteIcon.innerHTML = "delete";
             deleteIcon.classList.add('material-icons');
             deleteButton.addEventListener('click', function () {
-                deleteFromList();
-                updateCounter();
+                deleteFromList(deleteButtons, counterToDisplay);
+                updateCounter(counterToDisplay);
             });
 
             // creating new li (as container for flexible divs and their content)
@@ -298,24 +296,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
         taskInput.value = "";
 
-        markAsCompleted();
-        deleteFromList();
-        editTask();
-        updateCounter();
+        markAsCompleted(completeButtons, counterToDisplay);
+        deleteFromList(deleteButtons, counterToDisplay);
+        editTask(editButtons);
+        updateCounter(counterToDisplay);
 
     });
 
     sortButton.addEventListener('click', function () {
         sortTasks();
     });
-
     searchButton.addEventListener('click', function () {
         findTask();
-
     });
 
-    deleteAllItems();
-    updateCounter();
+    deleteAllItems(removeAll, counterToDisplay);
+    updateCounter(counterToDisplay);
 
 
 });
