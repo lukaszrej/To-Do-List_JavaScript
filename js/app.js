@@ -114,113 +114,104 @@ var deleteAllItems = function (button, counterDisplay) {
 
 };
 
+// Find task
+var findTask = function (button, oldItemsArray, counterDisplay) {
+    var taskList = document.getElementById('taskList');
+    var li = taskList.querySelectorAll('li');
+    var inputSearchElement = document.querySelector('#search');
+    var inputSearchValue = inputSearchElement.value;
+    var foundedValue = "";
+
+    if (button.innerText === "Find") {
+        for (var i = 0; i < li.length; i++) {
+
+            oldItemsArray.push(li[i]);
+
+            var taskText = li[i].querySelector('.to-do').innerHTML.toLowerCase();
+
+            if (taskText === inputSearchValue.toLowerCase()) {
+                foundedValue = li[i];
+                button.innerHTML = "Show all";
+            } else {
+                li[i].remove();
+            }
+        }
+
+        taskList.appendChild(foundedValue);
+        updateCounter(counterDisplay);
+
+    } else if (button.innerText === "Show all") {
+        for (var i = 0; i < oldItemsArray.length; i++) {
+            taskList.appendChild(oldItemsArray[i]);
+        }
+
+        button.innerHTML = "Find";
+        updateCounter(counterDisplay);
+    }
+};
+
+// Sort tasks
+var sortTasks = function (button, oldItemsArray) {
+    var taskList = document.getElementById('taskList');
+    var lis = taskList.querySelectorAll('.item-container');
+
+    if (button.innerText === 'SORT') {
+
+        var labels = [];
+
+        for (var i = 0; i < lis.length; i++) {
+            var currentLis = lis[i].querySelector('h2').innerText.toLowerCase();
+            labels.push(currentLis);
+
+            var sortedLabels = labels.sort();
+        }
+
+        for (var i = 0; i < sortedLabels.length; i++) {
+            for (var j = 0; j < lis.length; j++) {
+
+                oldItemsArray.push(lis[i]);
+
+                if (sortedLabels[i] === lis[j].querySelector('h2').innerText.toLowerCase()) {
+                    taskList.appendChild(lis[j]);
+                }
+            }
+        }
+
+        button.innerText = "UNSORT";
+
+    } else if (button.innerText === 'UNSORT') {
+        for (var i = 0; i < lis.length; i++) {
+            lis[i].remove();
+        }
+
+        for (var i = 0; i < oldItemsArray.length; i++) {
+            taskList.appendChild(oldItemsArray[i]);
+        }
+
+        oldItemsArray = [];
+
+        button.innerText = 'SORT';
+
+    }
+};
+
+
+// m a i n
 document.addEventListener("DOMContentLoaded", function () {
 
     // v a r i a b l e s
     var taskInput = document.getElementById('taskInput');
-
     var taskList = document.getElementById('taskList');
     var addTaskButton = document.getElementById('addTaskButton');
-
     var counterToDisplay = document.getElementById('toFinish');
-
     var editButtons = document.getElementsByClassName('edit');
     var completeButtons = document.getElementsByClassName('complete');
     var deleteButtons = document.getElementsByClassName('close');
-
     var removeAll = document.getElementById('removeFinishedTasksButton');
-
     var searchButton = document.querySelector('.searchButton');
     var oldItems = [];
-
     var sortButton = document.querySelector('#sort');
 
-
-    // f u n c t i o n s
-
-    // Find task
-    var findTask = function () {
-        var li = taskList.querySelectorAll('li');
-        var inputSearchElement = document.querySelector('#search');
-        var inputSearchValue = inputSearchElement.value;
-        var foundedValue = "";
-
-        if (searchButton.innerText === "Find") {
-            for (var i = 0; i < li.length; i++) {
-
-                oldItems.push(li[i]);
-
-                var taskText = li[i].querySelector('.to-do').innerHTML.toLowerCase();
-
-                if (taskText === inputSearchValue.toLowerCase()) {
-                    foundedValue = li[i];
-                    searchButton.innerHTML = "Show all";
-                } else {
-                    li[i].remove();
-                }
-            }
-
-            taskList.appendChild(foundedValue);
-            updateCounter(counterToDisplay);
-
-
-        } else if (searchButton.innerText === "Show all") {
-            for (var i = 0; i < oldItems.length; i++) {
-                taskList.appendChild(oldItems[i]);
-            }
-
-            searchButton.innerHTML = "Find";
-            updateCounter(counterToDisplay);
-        }
-
-    };
-
-    // Sort tasks
-    var sortTasks = function () {
-        var lis = taskList.querySelectorAll('.item-container');
-
-        if (sortButton.innerText === 'SORT') {
-
-            var labels = [];
-
-            for (var i = 0; i < lis.length; i++) {
-                var currentLis = lis[i].querySelector('h2').innerText.toLowerCase();
-                labels.push(currentLis);
-
-                var sortedLabels = labels.sort();
-            }
-
-            for (var i = 0; i < sortedLabels.length; i++) {
-                for (var j = 0; j < lis.length; j++) {
-
-                    oldItems.push(lis[i]);
-
-                    if (sortedLabels[i] === lis[j].querySelector('h2').innerText.toLowerCase()) {
-                        taskList.appendChild(lis[j]);
-                    }
-                }
-            }
-
-            sortButton.innerText = "UNSORT";
-
-        } else if (sortButton.innerText === 'UNSORT') {
-            for (var i = 0; i < lis.length; i++) {
-                lis[i].remove();
-            }
-
-            for (var i = 0; i < oldItems.length; i++) {
-                taskList.appendChild(oldItems[i]);
-            }
-
-            oldItems = [];
-
-            sortButton.innerText = 'SORT';
-
-        }
-    };
-
-
-    // m a i n
 
     // Create a new list item
     addTaskButton.addEventListener('click', function () {
@@ -303,15 +294,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
+
     sortButton.addEventListener('click', function () {
-        sortTasks();
+        sortTasks(sortButton, oldItems);
     });
+
     searchButton.addEventListener('click', function () {
-        findTask();
+        findTask(searchButton, oldItems, counterToDisplay);
     });
 
     deleteAllItems(removeAll, counterToDisplay);
     updateCounter(counterToDisplay);
-
 
 });
