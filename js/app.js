@@ -17,6 +17,8 @@ document.addEventListener("DOMContentLoaded", function () {
     var searchButton = document.querySelector('.searchButton');
     var oldItems = [];
 
+    var sortButton = document.querySelector('#sort');
+
 
     // f u n c t i o n s
 
@@ -107,13 +109,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-    // usunac tez z old items
     // Delete an item from the list
     var deleteFromList = function () {
         for (var i = 0; i < deleteButton.length; i++) {
             deleteButton[i].onclick = function () {
                 var div = this.parentElement.parentElement;
                 div.remove();
+
+                console.log(oldItems);
 
                 updateCounter();
             }
@@ -174,7 +177,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Sort tasks
     var sortTasks = function () {
         var lis = taskList.querySelectorAll('.item-container');
-        var sortButton = document.querySelector('#sort');
 
         if (sortButton.innerText === 'SORT') {
 
@@ -303,16 +305,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
-    var li = taskList.querySelectorAll('li');
-    var allTasks = [];
-
-    for (var i = 0; i < li.length; i++) {
-        allTasks.push(li[i]);
-    }
-
-    console.log(allTasks);
-
-    var sortButton = document.querySelector('#sort');
     sortButton.addEventListener('click', function () {
         sortTasks();
     });
