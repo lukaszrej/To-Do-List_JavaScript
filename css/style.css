@@ -12,7 +12,7 @@ html {
 }
 
 body {
-    min-width: 640px;
+    min-width: 320px;
 }
 
 a {
@@ -287,6 +287,63 @@ button .material-icons {
     color: white;
 }
 
+/* media queries */
+
+@media screen and (max-width: 320px) {
+    .main-container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+    .main-header, .main-footer {
+        padding-bottom: 2rem;
+        padding-top: 2rem;
+        font-size: 2rem;
+    }
+    input {
+        margin-top: 0;
+    }
+    .counter-container {
+        flex-direction: column;
+        align-items: center;
+        padding-left: 0;
+    }
+    .counter-container > div {
+        padding-bottom: 0.5rem;
+        padding-top: 1rem;
+    }
+    .counter-container > div:first-child {
+        padding-left: 2rem;
+    }
+    .counter-container > div:nth-child(2) {
+        display: none;
+    }
+    .item-container {
+        flex-direction: column;
+    }
+    .item-container .task {
+        justify-content: space-between;
+    }
+    .item-container h2 {
+        overflow: scroll;
+    }
+    #addTaskButton, #removeFinishedTasksButton {
+        font-size: 1.8rem;
+    }
+    #addTaskButton .material-icons, #removeFinishedTasksButton .material-icons {
+        top: 9%;
+    }
+    #taskList .complete, #taskList .close {
+        width: 100%;
+    }
+    #taskList .complete i, #taskList .close i {
+        left: 38%;
+    }
+    button#sort {
+        padding: 1rem 3.2rem;
+    }
+}
+
+
 /*  a n i m a t i o n  */
 
 /* animations classes */
@@ -299,7 +356,7 @@ button .material-icons {
 @-webkit-keyframes tracking-in-contract {
     0% {
         letter-spacing: 1em;
-        
+
         opacity: 0;
     }
     40% {
@@ -313,7 +370,7 @@ button .material-icons {
 @keyframes tracking-in-contract {
     0% {
         letter-spacing: 1em;
-    
+
         opacity: 0;
     }
     40% {
