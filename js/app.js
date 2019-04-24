@@ -14,10 +14,11 @@ var validateInput = function (inputValue) {
 };
 
 // Count to-dos
-var updateCounter = function (counterDisplay) {
+var updateCounter = function () {
     var finishedTasksCounter = 0;
     var counter = document.getElementsByClassName('to-do').length;
     var counterElement = document.getElementsByClassName('to-do');
+    var counterToDisplay = document.getElementById('toFinish');
 
     for (var i = 0; i < counter; i++) {
         var counterClasses = counterElement[i].classList;
@@ -30,7 +31,7 @@ var updateCounter = function (counterDisplay) {
 
     counter = counter - finishedTasksCounter;
 
-    counterDisplay.innerHTML = counter;
+    counterToDisplay.innerHTML = counter;
 };
 
 // Edit task
@@ -64,7 +65,7 @@ var editTask = function (buttons) {
 };
 
 // Mark as completed
-var markAsCompleted = function (buttons, counterDisplay) {
+var markAsCompleted = function (buttons) {
     for (var i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener('click', function () {
             var divText = this.parentElement.parentElement.querySelector('h2');
@@ -82,25 +83,25 @@ var markAsCompleted = function (buttons, counterDisplay) {
             var editButtonToRemove = divText.nextElementSibling;
             editButtonToRemove.classList.toggle('none');
 
-            updateCounter(counterDisplay);
+            updateCounter();
         })
     }
 };
 
 // Delete an item from the list
-var deleteFromList = function (buttons, counterDisplay) {
+var deleteFromList = function (buttons) {
     for (var i = 0; i < buttons.length; i++) {
         buttons[i].onclick = function () {
             var div = this.parentElement.parentElement;
             div.remove();
 
-            updateCounter(counterDisplay);
+            updateCounter();
         }
     }
 };
 
 // Delete all completed items
-var deleteAllItems = function (button, counterDisplay) {
+var deleteAllItems = function (button) {
     button.addEventListener('click', function () {
         var taskList = document.getElementById('taskList');
         var completedLis = taskList.querySelectorAll('.done');
@@ -109,13 +110,13 @@ var deleteAllItems = function (button, counterDisplay) {
             completedLis[i].parentElement.parentElement.remove();
         }
 
-        updateCounter(counterDisplay);
+        updateCounter();
     });
 
 };
 
 // Find task
-var findTask = function (button, oldItemsArray, counterDisplay) {
+var findTask = function (button, oldItemsArray) {
     var taskList = document.getElementById('taskList');
     var li = taskList.querySelectorAll('li');
     var inputSearchElement = document.querySelector('#search');
@@ -138,7 +139,7 @@ var findTask = function (button, oldItemsArray, counterDisplay) {
         }
 
         taskList.appendChild(foundedValue);
-        updateCounter(counterDisplay);
+        updateCounter();
 
     } else if (button.innerText === "Show all") {
         for (var i = 0; i < oldItemsArray.length; i++) {
@@ -146,7 +147,7 @@ var findTask = function (button, oldItemsArray, counterDisplay) {
         }
 
         button.innerHTML = "Find";
-        updateCounter(counterDisplay);
+        updateCounter();
     }
 };
 
@@ -203,7 +204,6 @@ document.addEventListener("DOMContentLoaded", function () {
     var taskInput = document.getElementById('taskInput');
     var taskList = document.getElementById('taskList');
     var addTaskButton = document.getElementById('addTaskButton');
-    var counterToDisplay = document.getElementById('toFinish');
     var editButtons = document.getElementsByClassName('edit');
     var completeButtons = document.getElementsByClassName('complete');
     var deleteButtons = document.getElementsByClassName('close');
@@ -244,7 +244,7 @@ document.addEventListener("DOMContentLoaded", function () {
             completeIcon.innerHTML = "done";
             completeIcon.classList.add('material-icons');
             completeButton.addEventListener('click', function () {
-                markAsCompleted(completeButtons, counterToDisplay);
+                markAsCompleted(completeButtons);
             });
 
             // deleteButton
@@ -254,8 +254,8 @@ document.addEventListener("DOMContentLoaded", function () {
             deleteIcon.innerHTML = "delete";
             deleteIcon.classList.add('material-icons');
             deleteButton.addEventListener('click', function () {
-                deleteFromList(deleteButtons, counterToDisplay);
-                updateCounter(counterToDisplay);
+                deleteFromList(deleteButtons);
+                updateCounter();
             });
 
             // creating new li (as container for flexible divs and their content)
@@ -287,10 +287,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         taskInput.value = "";
 
-        markAsCompleted(completeButtons, counterToDisplay);
-        deleteFromList(deleteButtons, counterToDisplay);
+        markAsCompleted(completeButtons);
+        deleteFromList(deleteButtons);
         editTask(editButtons);
-        updateCounter(counterToDisplay);
+        updateCounter();
 
     });
 
@@ -303,11 +303,11 @@ document.addEventListener("DOMContentLoaded", function () {
         var inputSearchElement = document.querySelector('#search');
 
         if (validateInput(inputSearchElement)) {
-            findTask(searchButton, oldItems, counterToDisplay);
+            findTask(searchButton, oldItems);
         }
     });
 
-    deleteAllItems(removeAll, counterToDisplay);
-    updateCounter(counterToDisplay);
+    deleteAllItems(removeAll);
+    updateCounter();
 
 });
