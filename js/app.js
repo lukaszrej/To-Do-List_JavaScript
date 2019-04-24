@@ -66,7 +66,7 @@ var editTask = function (buttons) {
 // Mark as completed
 var markAsCompleted = function (buttons, counterDisplay) {
     for (var i = 0; i < buttons.length; i++) {
-        buttons[i].onclick = function () {
+        buttons[i].addEventListener('click', function () {
             var divText = this.parentElement.parentElement.querySelector('h2');
 
             var editIcon = this.parentElement.previousElementSibling.querySelector('.edit i');
@@ -83,7 +83,7 @@ var markAsCompleted = function (buttons, counterDisplay) {
             editButtonToRemove.classList.toggle('none');
 
             updateCounter(counterDisplay);
-        }
+        })
     }
 };
 
