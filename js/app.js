@@ -65,27 +65,23 @@ var editTask = function (buttons) {
 };
 
 // Mark as completed
-var markAsCompleted = function (buttons) {
-    for (var i = 0; i < buttons.length; i++) {
-        buttons[i].addEventListener('click', function () {
-            var divText = this.parentElement.parentElement.querySelector('h2');
+var markAsCompleted = function (button) {
+    var divText = button.parentElement.parentElement.querySelector('h2');
 
-            var editIcon = this.parentElement.previousElementSibling.querySelector('.edit i');
-            divText.classList.toggle('done');
-            var divTask = divText.parentElement.parentElement;
-            if (divTask.firstElementChild.hasAttribute('contenteditable')) {
-                divTask.firstElementChild.setAttribute('contenteditable', 'false');
-                editIcon.classList.remove('fa-save');
-                editIcon.classList.add('fa-edit');
-            }
-
-            // if item is marked as completed remove the edit button
-            var editButtonToRemove = divText.nextElementSibling;
-            editButtonToRemove.classList.toggle('none');
-
-            updateCounter();
-        })
+    var editIcon = button.parentElement.previousElementSibling.querySelector('.edit i');
+    divText.classList.toggle('done');
+    var divTask = divText.parentElement.parentElement;
+    if (divTask.firstElementChild.hasAttribute('contenteditable')) {
+        divTask.firstElementChild.setAttribute('contenteditable', 'false');
+        editIcon.classList.remove('fa-save');
+        editIcon.classList.add('fa-edit');
     }
+
+    // if item is marked as completed remove the edit button
+    var editButtonToRemove = divText.nextElementSibling;
+    editButtonToRemove.classList.toggle('none');
+
+    updateCounter();
 };
 
 // Delete an item from the list
@@ -205,13 +201,11 @@ document.addEventListener("DOMContentLoaded", function () {
     var taskList = document.getElementById('taskList');
     var addTaskButton = document.getElementById('addTaskButton');
     var editButtons = document.getElementsByClassName('edit');
-    var completeButtons = document.getElementsByClassName('complete');
     var deleteButtons = document.getElementsByClassName('close');
     var removeAll = document.getElementById('removeFinishedTasksButton');
     var searchButton = document.querySelector('.searchButton');
     var oldItems = [];
     var sortButton = document.querySelector('#sort');
-
 
     // Create a new list item
     addTaskButton.addEventListener('click', function () {
@@ -244,7 +238,7 @@ document.addEventListener("DOMContentLoaded", function () {
             completeIcon.innerHTML = "done";
             completeIcon.classList.add('material-icons');
             completeButton.addEventListener('click', function () {
-                markAsCompleted(completeButtons);
+                markAsCompleted(this);
             });
 
             // deleteButton
@@ -286,7 +280,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         taskInput.value = "";
 
-        markAsCompleted(completeButtons);
         deleteFromList(deleteButtons);
         editTask(editButtons);
         updateCounter();
