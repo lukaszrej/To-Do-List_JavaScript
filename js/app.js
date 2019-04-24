@@ -255,7 +255,6 @@ document.addEventListener("DOMContentLoaded", function () {
             deleteIcon.classList.add('material-icons');
             deleteButton.addEventListener('click', function () {
                 deleteFromList(deleteButtons);
-                updateCounter();
             });
 
             // creating new li (as container for flexible divs and their content)
