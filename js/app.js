@@ -259,7 +259,6 @@ var sortTasks = function (button, oldItemsArray) {
     }
 };
 
-
 // m a i n
 document.addEventListener("DOMContentLoaded", function () {
     // v a r i a b l e s
@@ -289,7 +288,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Delete all completed items
+    // Delete all completed tasks
     removeAllButton.addEventListener('click', function () {
         deleteAllItems();
     });
