@@ -13,6 +13,85 @@ var validateInput = function (inputValue) {
     return true;
 };
 
+// Add new list item
+var addNewListItem = function (taskInput) {
+    var taskList = document.getElementById('taskList');
+
+    if (validateInput(taskInput)) {
+
+        // creating two flexible divs
+        var task = document.createElement('div');
+        task.classList.add("task");
+        var buttonContainer = document.createElement('div');
+        buttonContainer.classList.add("buttons");
+
+        // creating text for the task (as taskTitle)
+        var taskTitle = document.createElement('h2');
+        taskTitle.classList.add('to-do');
+        taskTitle.innerHTML = taskInput.value;
+
+        // creating buttons
+        // editButton
+        var editButton = document.createElement("button");
+        editButton.classList.add("edit");
+        var editIcon = document.createElement('i');
+        editIcon.classList.add("fas", "fa-edit");
+        editIcon.style.fontWeight = "300";
+        editButton.addEventListener('click', function () {
+            editTask(this);
+        });
+
+        // completeButton
+        var completeButton = document.createElement("button");
+        completeButton.classList.add('complete');
+        var completeIcon = document.createElement('i');
+        completeIcon.innerHTML = "done";
+        completeIcon.classList.add('material-icons');
+        completeButton.addEventListener('click', function () {
+            markAsCompleted(this);
+        });
+
+        // deleteButton
+        var deleteButton = document.createElement("button");
+        deleteButton.classList.add('close');
+        var deleteIcon = document.createElement('i');
+        deleteIcon.innerHTML = "delete";
+        deleteIcon.classList.add('material-icons');
+        deleteButton.addEventListener('click', function () {
+            deleteFromList(this);
+        });
+
+        // creating new li (as container for flexible divs and their content)
+        var newLi = document.createElement('li');
+        newLi.classList.add('item-container', 'tracking-in-contract');
+
+        // appending
+        // appending task title and star/edit buttons to the task
+        task.appendChild(taskTitle);
+        task.appendChild(editButton);
+
+        // appending icons to the buttons
+        editButton.appendChild(editIcon);
+        completeButton.appendChild(completeIcon);
+        deleteButton.appendChild(deleteIcon);
+
+        // appending sub-button-containers to the button-container
+        buttonContainer.appendChild(completeButton);
+        buttonContainer.appendChild(deleteButton);
+
+        // appending the button-container and new-task to the list-item
+        newLi.appendChild(task);
+        newLi.appendChild(buttonContainer);
+
+        // appending list-item to the list
+        taskList.appendChild(newLi);
+
+    }
+
+    taskInput.value = "";
+    updateCounter();
+};
+
 // Count to-dos
 var updateCounter = function () {
     var finishedTasksCounter = 0;
@@ -30,7 +109,6 @@ var updateCounter = function () {
     }
 
     counter = counter - finishedTasksCounter;
-
     counterToDisplay.innerHTML = counter;
 };
 
@@ -143,7 +221,6 @@ var sortTasks = function (button, oldItemsArray) {
     var lis = taskList.querySelectorAll('.item-container');
 
     if (button.innerText === 'SORT') {
-
         var labels = [];
 
         for (var i = 0; i < lis.length; i++) {
@@ -185,101 +262,25 @@ var sortTasks = function (button, oldItemsArray) {
 
 // m a i n
 document.addEventListener("DOMContentLoaded", function () {
-
     // v a r i a b l e s
     var taskInput = document.getElementById('taskInput');
-    var taskList = document.getElementById('taskList');
     var addTaskButton = document.getElementById('addTaskButton');
-    var removeAll = document.getElementById('removeFinishedTasksButton');
     var searchButton = document.querySelector('.searchButton');
-    var oldItems = [];
     var sortButton = document.querySelector('#sort');
+    var removeAllButton = document.getElementById('removeFinishedTasksButton');
+    var oldItems = [];
 
     // Create a new list item
     addTaskButton.addEventListener('click', function () {
-
-        if (validateInput(taskInput)) {
-
-            // creating two flexible divs
-            var task = document.createElement('div');
-            task.classList.add("task");
-            var buttonContainer = document.createElement('div');
-            buttonContainer.classList.add("buttons");
-
-            // creating text for the task (as taskTitle)
-            var taskTitle = document.createElement('h2');
-            taskTitle.classList.add('to-do');
-            taskTitle.innerHTML = taskInput.value;
-
-            // creating buttons
-            // editButton
-            var editButton = document.createElement("button");
-            editButton.classList.add("edit");
-            var editIcon = document.createElement('i');
-            editIcon.classList.add("fas", "fa-edit");
-            editIcon.style.fontWeight = "300";
-            editButton.addEventListener('click', function () {
-                editTask(this);
-            });
-
-            // completeButton
-            var completeButton = document.createElement("button");
-            completeButton.classList.add('complete');
-            var completeIcon = document.createElement('i');
-            completeIcon.innerHTML = "done";
-            completeIcon.classList.add('material-icons');
-            completeButton.addEventListener('click', function () {
-                markAsCompleted(this);
-            });
-
-            // deleteButton
-            var deleteButton = document.createElement("button");
-            deleteButton.classList.add('close');
-            var deleteIcon = document.createElement('i');
-            deleteIcon.innerHTML = "delete";
-            deleteIcon.classList.add('material-icons');
-            deleteButton.addEventListener('click', function () {
-                deleteFromList(this);
-            });
-
-            // creating new li (as container for flexible divs and their content)
-            var newLi = document.createElement('li');
-            newLi.classList.add('item-container', 'tracking-in-contract');
-
-            // appending
-            // appending task title and star/edit buttons to the task
-            task.appendChild(taskTitle);
-            task.appendChild(editButton);
-
-            // appending icons to the buttons
-            editButton.appendChild(editIcon);
-            completeButton.appendChild(completeIcon);
-            deleteButton.appendChild(deleteIcon);
-
-            // appending sub-button-containers to the button-container
-            buttonContainer.appendChild(completeButton);
-            buttonContainer.appendChild(deleteButton);
-
-            // appending the button-container and new-task to the list-item
-            newLi.appendChild(task);
-            newLi.appendChild(buttonContainer);
-
-            // appending list-item to the list
-            taskList.appendChild(newLi);
-
-        }
-
-        taskInput.value = "";
-
-        updateCounter();
-
+       addNewListItem(taskInput);
     });
 
-
+    // Sort tasks
     sortButton.addEventListener('click', function () {
-        sortTasks(sortButton, oldItems);
+        sortTasks(this, oldItems);
     });
 
+    // Search tasks
     searchButton.addEventListener('click', function () {
         var inputSearchElement = document.querySelector('#search');
 
@@ -288,7 +289,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    removeAll.addEventListener('click', function () {
+    // Delete all completed items
+    removeAllButton.addEventListener('click', function () {
         deleteAllItems();
     });
 
