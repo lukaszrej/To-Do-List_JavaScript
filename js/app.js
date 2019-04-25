@@ -85,29 +85,23 @@ var markAsCompleted = function (button) {
 };
 
 // Delete an item from the list
-var deleteFromList = function (buttons) {
-    for (var i = 0; i < buttons.length; i++) {
-        buttons[i].onclick = function () {
-            var div = this.parentElement.parentElement;
-            div.remove();
+var deleteFromList = function (button) {
+    var div = button.parentElement.parentElement;
+    div.remove();
 
-            updateCounter();
-        }
-    }
+    updateCounter();
 };
 
 // Delete all completed items
-var deleteAllItems = function (button) {
-    button.addEventListener('click', function () {
-        var taskList = document.getElementById('taskList');
-        var completedLis = taskList.querySelectorAll('.done');
+var deleteAllItems = function () {
+    var taskList = document.getElementById('taskList');
+    var completedLis = taskList.querySelectorAll('.done');
 
-        for (var i = 0; i < completedLis.length; i++) {
-            completedLis[i].parentElement.parentElement.remove();
-        }
+    for (var i = 0; i < completedLis.length; i++) {
+        completedLis[i].parentElement.parentElement.remove();
+    }
 
-        updateCounter();
-    });
+    updateCounter();
 
 };
 
@@ -201,7 +195,6 @@ document.addEventListener("DOMContentLoaded", function () {
     var taskList = document.getElementById('taskList');
     var addTaskButton = document.getElementById('addTaskButton');
     var editButtons = document.getElementsByClassName('edit');
-    var deleteButtons = document.getElementsByClassName('close');
     var removeAll = document.getElementById('removeFinishedTasksButton');
     var searchButton = document.querySelector('.searchButton');
     var oldItems = [];
@@ -248,7 +241,7 @@ document.addEventListener("DOMContentLoaded", function () {
             deleteIcon.innerHTML = "delete";
             deleteIcon.classList.add('material-icons');
             deleteButton.addEventListener('click', function () {
-                deleteFromList(deleteButtons);
+                deleteFromList(this);
             });
 
             // creating new li (as container for flexible divs and their content)
@@ -280,7 +273,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         taskInput.value = "";
 
-        deleteFromList(deleteButtons);
         editTask(editButtons);
         updateCounter();
 
@@ -299,7 +291,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    deleteAllItems(removeAll);
+    removeAll.addEventListener('click', function () {
+        deleteAllItems();
+    });
+
     updateCounter();
 
 });
