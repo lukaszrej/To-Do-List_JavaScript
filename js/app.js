@@ -35,33 +35,29 @@ var updateCounter = function () {
 };
 
 // Edit task
-var editTask = function (buttons) {
-    for (var i = 0; i < buttons.length; i++) {
-        buttons[i].onclick = function () {
+var editTask = function (button) {
 
-            // non-editable edit-button
-            this.setAttribute('contenteditable', 'false');
+    // non-editable edit-button
+    button.setAttribute('contenteditable', 'false');
 
-            // editable / non-editable task
-            var div = this.parentElement;
+    // editable / non-editable task
+    var div = button.parentElement;
 
-            // allow / don't allow to edit task
-            if (this.firstChild.classList.value === "fas fa-edit") {
-                // change the icons
-                this.firstChild.classList.remove("fa-edit");
-                this.firstChild.classList.add("fa-save");
-                // make the task editable
-                div.setAttribute('contenteditable', 'true');
-            } else if (this.firstChild.classList.value === "fas fa-save") {
-                // change the icons
-                this.firstChild.classList.remove("fa-save");
-                this.firstChild.classList.add("fa-edit");
-                // make the task non-editable
-                div.setAttribute('contenteditable', 'false');
-            }
-
-        };
+    // allow / don't allow to edit task
+    if (button.firstChild.classList.value === "fas fa-edit") {
+        // change the icons
+        button.firstChild.classList.remove("fa-edit");
+        button.firstChild.classList.add("fa-save");
+        // make the task editable
+        div.setAttribute('contenteditable', 'true');
+    } else if (button.firstChild.classList.value === "fas fa-save") {
+        // change the icons
+        button.firstChild.classList.remove("fa-save");
+        button.firstChild.classList.add("fa-edit");
+        // make the task non-editable
+        div.setAttribute('contenteditable', 'false');
     }
+
 };
 
 // Mark as completed
@@ -194,7 +190,6 @@ document.addEventListener("DOMContentLoaded", function () {
     var taskInput = document.getElementById('taskInput');
     var taskList = document.getElementById('taskList');
     var addTaskButton = document.getElementById('addTaskButton');
-    var editButtons = document.getElementsByClassName('edit');
     var removeAll = document.getElementById('removeFinishedTasksButton');
     var searchButton = document.querySelector('.searchButton');
     var oldItems = [];
@@ -218,11 +213,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // creating buttons
             // editButton
-            var buttonEdit = document.createElement("button");
-            buttonEdit.classList.add("edit");
+            var editButton = document.createElement("button");
+            editButton.classList.add("edit");
             var editIcon = document.createElement('i');
             editIcon.classList.add("fas", "fa-edit");
             editIcon.style.fontWeight = "300";
+            editButton.addEventListener('click', function () {
+                editTask(this);
+            });
 
             // completeButton
             var completeButton = document.createElement("button");
@@ -251,10 +249,10 @@ document.addEventListener("DOMContentLoaded", function () {
             // appending
             // appending task title and star/edit buttons to the task
             task.appendChild(taskTitle);
-            task.appendChild(buttonEdit);
+            task.appendChild(editButton);
 
             // appending icons to the buttons
-            buttonEdit.appendChild(editIcon);
+            editButton.appendChild(editIcon);
             completeButton.appendChild(completeIcon);
             deleteButton.appendChild(deleteIcon);
 
@@ -273,7 +271,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         taskInput.value = "";
 
-        editTask(editButtons);
         updateCounter();
 
     });
