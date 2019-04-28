@@ -271,13 +271,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Create a new list item
     addTaskButton.addEventListener('click', function () {
-       addNewListItem(taskInput);
-    });
+       addNewListItem(taskInput);});
 
     // Sort tasks
     sortButton.addEventListener('click', function () {
-        sortTasks(this, oldItems);
-    });
+        sortTasks(this, oldItems);});
 
     // Search tasks
     searchButton.addEventListener('click', function () {
@@ -290,8 +288,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Delete all completed tasks
     removeAllButton.addEventListener('click', function () {
-        deleteAllItems();
-    });
+        deleteAllItems();});
 
     updateCounter();
 
